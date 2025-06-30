@@ -1,0 +1,71 @@
+<!-- myecommerceproject/cart/templates/cart/cart_detail.html -->
+{% extends 'base.html' %} {% block title %}আপনার কার্ট{% endblock %} {% block content %}
+<div class="bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">আপনার শপিং কার্ট</h1>
+
+    {% if cart %}
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider rounded-tl-lg">পণ্য</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">পরিমাণ</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">একক মূল্য</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">মোট</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider rounded-tr-lg"></th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                {% for item in cart %}
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <a href="{{ item.product.get_absolute_url }}" class="text-indigo-600 hover:underline font-medium">
+                                {{ item.product.name }}
+                            </a>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <form action="{% url 'cart:cart_add' item.product.id %}" method="post" class="flex items-center space-x-2">
+                            {% csrf_token %} {{ item.update_quantity_form.quantity }} {{ item.update_quantity_form.override }}
+                            <button type="submit" class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-colors duration-200 text-sm">
+                                    আপডেট
+                                </button>
+                        </form>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">৳ {{ item.price }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">৳ {{ item.total_price }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <form action="{% url 'cart:cart_remove' item.product.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="text-red-600 hover:text-red-800 transition-colors duration-200">সরান</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr class="bg-gray-50">
+                    <td colspan="3" class="px-6 py-4 text-right text-lg font-bold text-gray-800 rounded-bl-lg">মোট মূল্য:</td>
+                    <td colspan="2" class="px-6 py-4 text-left text-lg font-bold text-indigo-700 rounded-br-lg">৳ {{ cart.get_total_price }}</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="flex flex-col sm:flex-row justify-between items-center mt-8 space-y-4 sm:space-y-0">
+        <a href="{% url 'products:product_list' %}" class="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition-colors duration-300 shadow-md w-full sm:w-auto text-center">
+                কেনাকাটা চালিয়ে যান
+            </a>
+        <a href="{% url 'orders:order_create' %}" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors duration-300 shadow-lg w-full sm:w-auto text-center">
+                চেকআউট
+            </a>
+    </div>
+    {% else %}
+    <div class="text-center py-12">
+        <p class="text-2xl text-gray-600 mb-4">আপনার কার্ট খালি।</p>
+        <a href="{% url 'products:product_list' %}" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-indigo-700 transition-colors duration-300 shadow-xl transform hover:scale-105">
+                পণ্য দেখুন
+            </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

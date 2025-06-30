@@ -1,3 +1,4 @@
+# myecommerceproject/products/models.py
 from django.db import models
 from django.urls import reverse
 
@@ -32,10 +33,14 @@ class Product(models.Model):
 
     class Meta:
         ordering = ('name',) # নামের ভিত্তিতে সাজানো হবে
-        index_together = (('id', 'slug'),) # দ্রুত কোয়েরির জন্য ইনডেক্স
+        # 'index_together' এর পরিবর্তে 'indexes' ব্যবহার করা হয়েছে
+        indexes = [
+            models.Index(fields=['id', 'slug']),
+        ]
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
         return reverse('products:product_detail', args=[self.id, self.slug])
+

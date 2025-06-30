@@ -1,0 +1,55 @@
+<!-- myecommerceproject/products/templates/products/product_list.html -->
+{% extends 'base.html' %} {% load static %} {% block title %}পণ্যের তালিকা{% endblock %} {% block content %}
+<div class="flex flex-col md:flex-row">
+    <!-- ক্যাটাগরি সাইডবার -->
+    <div class="md:w-1/4 w-full bg-white p-6 rounded-lg shadow-md md:mr-6 mb-6 md:mb-0">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">ক্যাটাগরি</h3>
+        <ul class="space-y-2">
+            <li class="mb-2">
+                <a href="{% url 'products:product_list' %}" class="text-indigo-600 hover:text-indigo-800 {% if not category %}font-bold{% endif %} transition-colors duration-200">
+                    সকল পণ্য
+                </a>
+            </li>
+            {% for c in categories %}
+            <li class="mb-2">
+                <a href="{{ c.get_absolute_url }}" class="text-gray-700 hover:text-indigo-600 {% if category.slug == c.slug %}font-bold text-indigo-600{% endif %} transition-colors duration-200">
+                        {{ c.name }}
+                    </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- পণ্যের তালিকা -->
+    <div class="md:w-3/4 w-full">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">
+            {% if category %}{{ category.name }} - {% endif %}আমাদের পণ্য
+        </h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for product in products %}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-transform duration-300 hover:scale-105">
+                <a href="{{ product.get_absolute_url }}">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-48 object-cover">
+                    {% else %}
+                        <img src="https://placehold.co/600x400/CCCCCC/333333?text=কোন+ছবি+নেই" alt="Placeholder Image" class="w-full h-48 object-cover">
+                    {% endif %}
+                </a>
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-2 truncate">
+                        <a href="{{ product.get_absolute_url }}" class="hover:text-indigo-600 transition-colors duration-200">{{ product.name }}</a>
+                    </h2>
+                    <p class="text-gray-600 text-lg mb-2">৳ {{ product.price }}</p>
+                    <p class="text-gray-500 text-sm mb-4 line-clamp-2">{{ product.description|truncatechars:100 }}</p>
+                    <a href="{{ product.get_absolute_url }}" class="inline-block bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors duration-300 shadow-lg">
+                        বিস্তারিত দেখুন
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-gray-700 text-lg col-span-full text-center">এই ক্যাটাগরিতে কোন পণ্য নেই।</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

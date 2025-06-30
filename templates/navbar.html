@@ -18,7 +18,14 @@
                 {% endif %}
             </a> {% if user.is_authenticated %}
             <span class="text-white px-3 py-2">স্বাগতম, {{ user.username }}!</span>
-            <a href="{% url 'logout' %}" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors duration-300 shadow-lg">লগআউট</a> {% else %}
+            <!-- লগআউট বাটনটি একটি ফর্মের মধ্যে রাখা হয়েছে -->
+            <form action="{% url 'logout' %}" method="post" class="inline-block">
+                {% csrf_token %}
+                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors duration-300 shadow-lg cursor-pointer">
+                        লগআউট
+                    </button>
+            </form>
+            {% else %}
             <a href="{% url 'login' %}" class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition-colors duration-300 shadow-lg">লগইন</a>
             <a href="{% url 'signup' %}" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-300 shadow-lg">রেজিস্টার</a> {% endif %}
         </div>
