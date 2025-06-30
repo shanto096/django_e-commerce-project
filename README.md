@@ -1,3 +1,6 @@
+### 📁 Project Structure
+
+```
 myecommerceproject/
 ├── venv/                       # Virtual environment directory
 ├── manage.py                   # Django project management utility
@@ -76,3 +79,4 @@ myecommerceproject/
 │   ├── navbar.html
 │   └── home.html
 └── db.sqlite3                  # Default SQLite database file (created after migrations)
+```
