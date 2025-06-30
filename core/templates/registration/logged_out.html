@@ -1,0 +1,11 @@
+<!-- myecommerceproject/core/templates/registration/logged_out.html -->
+{% extends "base.html" %} {% block title %}লগআউট{% endblock %} {% block content %}
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md text-center">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">আপনি সফলভাবে লগআউট করেছেন।</h2>
+        <p class="text-lg text-gray-600 mb-6">
+            আপনি কি আবার লগইন করতে চান? <a href="{% url 'login' %}" class="font-medium text-indigo-600 hover:text-indigo-500">এখানে ক্লিক করুন।</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
