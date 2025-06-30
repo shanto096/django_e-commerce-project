@@ -1,0 +1,43 @@
+<!-- myecommerceproject/templates/base.html -->
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Django ই-কমার্স{% endblock %}</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    {% include 'navbar.html' %} {# নেভিগেশন বার ইনক্লুড করা হয়েছে #}
+
+    <main class="flex-grow container mx-auto px-4 py-8">
+        {% block content %} {# এখানে প্রতিটি পেজের কন্টেন্ট থাকবে #} {% endblock %}
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Django ই-কমার্স। সকল স্বত্ব সংরক্ষিত।</p>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<!-- myecommerceproject/templates/navbar.html -->
+<nav class="bg-indigo-700 p-4 shadow-md">
+    <div class="container mx-auto flex justify-between items-center">
+        <!-- ব্র্যান্ডের নাম -->
+        <a href="{% url 'home' %}" class="text-white text-2xl font-bold rounded-md px-3 py-2 hover:bg-indigo-600 transition-colors duration-300">
+            আমার দোকান
+        </a>
+
+        <!-- নেভিগেশন লিংকস -->
+        <div class="flex items-center space-x-6">
+            <a href="{% url 'products:product_list' %}" class="text-white hover:text-indigo-200 rounded-md px-3 py-2 transition-colors duration-300">পণ্য</a>
+            <a href="{% url 'cart:cart_detail' %}" class="text-white hover:text-indigo-200 rounded-md px-3 py-2 transition-colors duration-300 relative">
+                কার্ট
+                {% if cart|length > 0 %}
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                        {{ cart|length }}
+                    </span>
+                {% endif %}
+            </a> {% if user.is_authenticated %}
+            <span class="text-white px-3 py-2">স্বাগতম, {{ user.username }}!</span>
+            <a href="{% url 'logout' %}" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors duration-300 shadow-lg">লগআউট</a> {% else %}
+            <a href="{% url 'login' %}" class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition-colors duration-300 shadow-lg">লগইন</a>
+            <a href="{% url 'signup' %}" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-300 shadow-lg">রেজিস্টার</a> {% endif %}
+        </div>
+    </div>
+</nav>
